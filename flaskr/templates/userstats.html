@@ -1,0 +1,380 @@
+{% extends "base.html" %}
+{% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Swatify</title>
+    <meta name="description" content="Connecting Swatties through music!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href={{url_for('static', filename='css/dashboard.css')}}>
+    <link rel="shortcut icon" href={{url_for('static', filename='SwatHome.gif')}}>
+    <script src={{url_for('static', filename='js/script.js')}}></script>
+    <script src = "https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
+    <style type="text/css">
+        body {
+            background-image: linear-gradient(135deg, cornflowerblue, 1%, #222225, #222225, #222225);
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<div class="user-main">
+<h1 class="page-h1">Your Stats</h1>
+      <div class="toptoggle">
+        <button id="toptracksbtn" autofocus onclick="showtoptracks()">Top Tracks</button>
+        <button id="topartistsbtn" onclick="showtopartists()">Top Artists</button>
+        <button id="supersbtn" onclick="showSupers()">Highlights</button>
+        <button id="showallbtn" onclick="showAll()">Show all</button>
+      </div>
+      <p class="filter-tag">Filter By</p>
+
+
+
+      <div id="toptracks" class="stats-wrap">
+        <h2>Your top tracks:</h2>
+        {% for track in toptracks %}
+        
+          <li class="result-item leaders-li">
+            <h3>{{ toptracks.index(track) + 1 }}</h3>
+            <img id="tracks-lead-img" class="song-img" src={{ track[1] }}>
+            <div class="result-info">
+              <p class="p-title p-leaders">{{ track[5] }}</p>
+              <p class="p-artist">{{ track[6] }}</p>
+              <p id="devtrack-playback" class="playback-hidden">{{ track[4] }}</p>
+        
+              <div class="audio-player audio-player-leaders audio-player-user">
+                <p class="playback">{{ track[4] }}</p>
+        
+                <div class="timeline">
+                  <div class="progress"></div>
+                </div>
+        
+                <div class="controls">
+                  <div class="play-container">
+                    <div id="toggle-play" class="toggle-play play"></div>
+                  </div>
+                  <div class="time">
+                    <div class="current">0:00</div>
+                    <div class="divider">/</div>
+                    <div class="length"></div>
+                  </div>
+                  <div class="volume-container">
+                    <div class="volume-button">
+                      <div class="volume icono-volumeMedium"></div>
+                    </div>
+                    
+                    <div class="volume-slider">
+                      <div class="volume-percentage"></div>
+                    </div>
+                  </div>
+                </div>
+        
+              </div>
+        
+            </div>
+            <div class="open-wrap-tracks">
+            <div class="open-wrap">
+              <div class="open-spotify">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <div class="open-submenu open-submenu-leaders">
+                <div class="button">
+                  <a class="open-a" href={{ track[3] }} target="_blank">Play on Spotify</a>
+                </div>
+                <div class="button">
+                  <a class="open-a" href={{ track[4] }} download>Download</a>
+                </div>
+              </div>
+            </div>
+            </div>
+          </li>
+        
+    
+        {% endfor %}
+      </div>
+
+
+    <div class="stats-wrap" id="topartists">
+      <h2>Your top artists:</h2>
+      <ul>
+        {% for artist in topartists %}
+        <div class="track-list">
+            <h3>{{ topartists.index(artist) + 1 }}</h3>
+            <li class="song-item">{{ artist[0] }}<img id="tracks-lead-img" class="song-img" src={{ artist[1] }}></li>
+            <div class="open-wrap-artists">
+              <div class="open-wrap">
+                <div class="open-spotify">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <div class="open-submenu submenu-artists">
+                  <div class="button">
+                    <a class="open-a" href={{ artist[2] }} target="_blank">View on Spotify</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+      </ul>
+    </div>
+
+
+    <div class="stats-wrap" id="supers-wrap">
+      <h2>Your highlights:</h2>
+      <div class="superlatives super1">
+        <h2 id="super-h2">Most Danceable Song</h2>
+
+        <li class="result-item leaders-li super-li">
+          <img class="song-img" src={{ topSupers['topDance']['image'] }}>
+          <div class="result-info">
+            <p class="p-title p-leaders">{{ topSupers['topDance']['title'] }}</p>
+            <p class="p-artist">{{ topSupers['topDance']['artist'] }}</p>
+            <p id="devtrack-playback" class="playback-hidden">{{ topSupers['topDance']['playback'] }}</p>
+      
+            <div class="audio-player audio-player-leaders audio-player-super1">
+              <p class="playback">{{ topSupers['topDance']['playback'] }}</p>
+      
+              <div class="timeline">
+                <div class="progress"></div>
+              </div>
+      
+              <div class="controls">
+                <div class="play-container">
+                  <div id="toggle-play" class="toggle-play play"></div>
+                </div>
+                <div class="time">
+                  <div class="current">0:00</div>
+                  <div class="divider">/</div>
+                  <div class="length"></div>
+                </div>
+                <div class="volume-container">
+                  <div class="volume-button">
+                    <div class="volume icono-volumeMedium"></div>
+                  </div>
+                  
+                  <div class="volume-slider">
+                    <div class="volume-percentage"></div>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
+      
+          </div>
+          <div class="open-wrap-tracks">
+          <div class="open-wrap">
+            <div class="open-spotify">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <div class="open-submenu open-submenu-leaders">
+              <div class="button">
+                <a class="open-a" href={{ topSupers['topDance']['tracklink'] }} target="_blank">Play on Spotify</a>
+              </div>
+              <div class="button">
+                <a class="open-a" href={{ topSupers['topDance']['playback'] }} download>Download</a>
+              </div>
+            </div>
+          </div>
+          </div>
+        </li>
+        <h3>Score: {{topSupers['topDance']['dance'] * 100}}</h3>
+      </div>
+
+
+      <div class="superlatives super2">
+        <h2 id="super-h2">Happiest Song</h2>
+
+        <li class="result-item leaders-li super-li">
+          <img class="song-img" src={{ topSupers['topHappy']['image'] }}>
+          <div class="result-info">
+            <p class="p-title p-leaders">{{ topSupers['topHappy']['title'] }}</p>
+            <p class="p-artist">{{ topSupers['topHappy']['artist'] }}</p>
+            <p id="devtrack-playback" class="playback-hidden">{{ topSupers['topHappy']['playback'] }}</p>
+      
+            <div class="audio-player audio-player-leaders audio-player-super2">
+              <p class="playback">{{ topSupers['topHappy']['playback'] }}</p>
+      
+              <div class="timeline">
+                <div class="progress"></div>
+              </div>
+      
+              <div class="controls">
+                <div class="play-container">
+                  <div id="toggle-play" class="toggle-play play"></div>
+                </div>
+                <div class="time">
+                  <div class="current">0:00</div>
+                  <div class="divider">/</div>
+                  <div class="length"></div>
+                </div>
+                <div class="volume-container">
+                  <div class="volume-button">
+                    <div class="volume icono-volumeMedium"></div>
+                  </div>
+                  
+                  <div class="volume-slider">
+                    <div class="volume-percentage"></div>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
+      
+            </div>
+            <div class="open-wrap-tracks">
+            <div class="open-wrap">
+              <div class="open-spotify">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <div class="open-submenu open-submenu-leaders">
+                <div class="button">
+                  <a class="open-a" href={{ topSupers['topHappy']['tracklink'] }} target="_blank">Play on Spotify</a>
+                </div>
+                <div class="button">
+                  <a class="open-a" href={{ topSupers['topHappy']['playback'] }} download>Download</a>
+                </div>
+              </div>
+            </div>
+            </div>
+          </li>
+          <h3>Score: {{topSupers['topHappy']['happy'] * 100}}</h3>
+        </div>
+
+
+
+        <div class="superlatives super3">
+          <h2 id="super-h2">Fastest Tempo</h2>
+  
+          <li class="result-item leaders-li super-li">
+            <img class="song-img" src={{ topSupers['topTempo']['image'] }}>
+            <div class="result-info">
+              <p class="p-title p-leaders">{{ topSupers['topTempo']['title'] }}</p>
+              <p class="p-artist">{{ topSupers['topTempo']['artist'] }}</p>
+              <p id="devtrack-playback" class="playback-hidden">{{ topSupers['topTempo']['playback'] }}</p>
+        
+              <div class="audio-player audio-player-leaders audio-player-super3">
+                <p class="playback">{{ topSupers['topTempo']['playback'] }}</p>
+        
+                <div class="timeline">
+                  <div class="progress"></div>
+                </div>
+        
+                <div class="controls">
+                  <div class="play-container">
+                    <div id="toggle-play" class="toggle-play play"></div>
+                  </div>
+                  <div class="time">
+                    <div class="current">0:00</div>
+                    <div class="divider">/</div>
+                    <div class="length"></div>
+                  </div>
+                  <div class="volume-container">
+                    <div class="volume-button">
+                      <div class="volume icono-volumeMedium"></div>
+                    </div>
+                    
+                    <div class="volume-slider">
+                      <div class="volume-percentage"></div>
+                    </div>
+                  </div>
+                </div>
+        
+              </div>
+        
+              </div>
+              <div class="open-wrap-tracks">
+              <div class="open-wrap">
+                <div class="open-spotify">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <div class="open-submenu open-submenu-leaders">
+                  <div class="button">
+                    <a class="open-a" href={{ topSupers['topTempo']['tracklink'] }} target="_blank">Play on Spotify</a>
+                  </div>
+                  <div class="button">
+                    <a class="open-a" href={{ topSupers['topTempo']['playback'] }} download>Download</a>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </li>
+            <h3>Tempo: {{"{:.1f}".format(topSupers['topTempo']['tempo'])  }}</h3>
+          </div>
+
+          <div class="superlatives super4">
+            <h2 id="super-h2">Most Energetic</h2>
+    
+            <li class="result-item leaders-li super-li">
+              <img class="song-img" src={{ topSupers['topEnergy']['image'] }}>
+              <div class="result-info">
+                <p class="p-title p-leaders">{{ topSupers['topEnergy']['title'] }}</p>
+                <p class="p-artist">{{ topSupers['topEnergy']['artist'] }}</p>
+                <p id="devtrack-playback" class="playback-hidden">{{ topSupers['topEnergy']['playback'] }}</p>
+          
+                <div class="audio-player audio-player-leaders audio-player-super4">
+                  <p class="playback">{{ topSupers['topEnergy']['playback'] }}</p>
+          
+                  <div class="timeline">
+                    <div class="progress"></div>
+                  </div>
+          
+                  <div class="controls">
+                    <div class="play-container">
+                      <div id="toggle-play" class="toggle-play play"></div>
+                    </div>
+                    <div class="time">
+                      <div class="current">0:00</div>
+                      <div class="divider">/</div>
+                      <div class="length"></div>
+                    </div>
+                    <div class="volume-container">
+                      <div class="volume-button">
+                        <div class="volume icono-volumeMedium"></div>
+                      </div>
+                      
+                      <div class="volume-slider">
+                        <div class="volume-percentage"></div>
+                      </div>
+                    </div>
+                  </div>
+          
+                </div>
+          
+                </div>
+                <div class="open-wrap-tracks">
+                <div class="open-wrap">
+                  <div class="open-spotify">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <div class="open-submenu open-submenu-leaders">
+                    <div class="button">
+                      <a class="open-a" href={{ topSupers['topEnergy']['tracklink'] }} target="_blank">Play on Spotify</a>
+                    </div>
+                    <div class="button">
+                      <a class="open-a" href={{ topSupers['topEnergy']['playback'] }} download>Download</a>
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </li>
+              <h3>Score: {{topSupers['topEnergy']['energy'] * 100}}</h3>
+            </div>
+            
+
+    </div>
+</div>
+
+{% endblock content %}

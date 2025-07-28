@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Swatify</title>
+    <meta name="description" content="Connecting Swatties through music!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href={{url_for('static', filename='css/dashboard.css')}}>
+    <link rel="shortcut icon" href={{url_for('static', filename='SwatHome.gif')}}>
+    <script src={{url_for('static', filename='js/script.js')}}></script>
+    <script src = "https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
+    <style type="text/css">
+        body {
+            background-image: linear-gradient(135deg, rgb(237, 100, 180), 1%, #222225, #222225, #222225);
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<div class="user-main">
+    <h1 class="page-h1 rec-h1">Recommendations</h1>
+    <div class="recs">
+        <h3> Feature coming soon!</h3>
+        <h3> Stay tuned to be able to make/get recommendations for/from your peers, as well as automatic recommendations and much more!</h3>
+    </div>
+    <h3 class="recs-sign">- The Dev Team</h3>
+</div>
+
+
+{% endblock content %}

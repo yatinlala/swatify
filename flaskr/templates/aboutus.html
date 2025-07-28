@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Swatify</title>
+    <meta name="description" content="Connecting Swatties through music!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href={{url_for('static', filename='css/dashboard.css')}}>
+    <link rel="shortcut icon" href={{url_for('static', filename='SwatHome.gif')}}>
+    <script src={{url_for('static', filename='js/script.js')}}></script>
+    <script src = "https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
+    <style type="text/css">
+        body {
+            background-image: linear-gradient(135deg, rgb(100, 237, 187), 1%, #222225, #222225, #222225);
+        }
+    </style>
+{% endblock %}
+{% block content %}
+<div class="user-main">
+  <h1 class="page-h1">Mission</h1>
+  <div class="Our_Team">
+      <h3> As college students, we are always listening to music but often struggle to find new songs to listen to.</h3>
+      <h3> Hence, we created Swatify as a means for Swatties to easily discover new music by seeing what their peers have been listening to. We 
+        hope you enjoy!
+      </h3>
+      <h3 class="about-sign">- The Dev Team</h3>
+  </div>
+  <h1 class="page-h1">Our Team</h1>
+  <div class="Orlando">
+        <img class="page-h1 dev-img" src="https://cygnet.sccs.swarthmore.edu/media/photos/vanilla/oazuara1_c.jpg">
+        <h1>Orlando Azuara</h1>
+        <h2>oazuara1@swarthmore.edu</h2>
+  </div>
+              
+  <div class="Yatin">
+        
+        <img class="page-h1 dev-img" src={{url_for('static', filename='yatinpic.jpg')}}>
+        <h1>Yatin Lala</h1>
+        <h2>ylala1@swarthmore.edu</h2>
+        
+  </div>
+
+  <div class="Anna">
+        
+        
+        <img class="page-h1 dev-img" src="https://cygnet.sccs.swarthmore.edu/media/photos/vanilla/astanco1_c.jpg">
+        <h1>Anna Stancofski</h1>
+        <h2>astanco1@swarthmore.edu</h2>
+        
+  </div>
+
+  <div class="Jaz">
+        <img class="page-h1 dev-img" src="https://cygnet.sccs.swarthmore.edu/media/photos/vanilla/jreid1_c.jpg">
+        <h1>Jahzeel Reid</h1>
+        <h2>jreid1@swarthmore.edu</h2>
+  </div>
+</div>
+
+{% endblock content %}

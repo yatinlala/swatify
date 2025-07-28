@@ -1,0 +1,31 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Swatify</title>
+    <meta name="description" content="Connecting Swatties through music!">
+    <link rel="stylesheet" href={{url_for('static', filename='css/style.css')}}>
+    <link rel="shortcut icon" href={{url_for('static', filename='SwatHome.gif')}}>
+  </head>
+
+  <body>
+      <center>
+
+         <!-- Login -->
+        <div class="header">
+          <img class="logo" src={{url_for('static', filename='SwatHome.gif')}} alt="Swat logo">
+          <h3><span>Swarthmore College's</span> hub for music exploration, leaderboards, and more! </h3>
+        
+       </div>
+
+       <div class="login">
+          <form action={{ url_for("login") }}>
+            <button id="login">
+              <img alt="Spotify" src="https://www.edigitalagency.com.au/wp-content/uploads/Spotify-Icon-png-rgb-black.png" class="spotify-logo">
+              Login with Spotify
+            </button>
+          </form>
+       </div>
+    </center>
+  </body>
+</html>

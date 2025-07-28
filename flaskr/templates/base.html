@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!--<meta http-equiv=refresh content="1; URL='/dashboard/'">-->
+    <title>Swatify</title>
+    <meta name="description" content="Connecting Swatties through music!">
+    <link rel="stylesheet" href={{url_for('static', filename='css/dashboard.css')}}>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src={{url_for('static', filename='js/script.js')}}></script>
+    <script src = "https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.13.0/d3-legend.js"></script>
+
+    <link rel="shortcut icon" href={{url_for('static', filename='SwatHome.gif')}}>
+    {% endblock %}
+  </head>
+
+  <body id="body" onload="load()">
+
+    <!-- MENU BAR -->
+    <div id="menu-wrap" class="menu-wrap">
+      <div class="menu">
+        <a id="logo-link" href={{ url_for("dashboard") }}><img id="logo" src={{url_for('static', filename='nobk_swatlogo.gif')}} alt="logo"></a>
+        
+        <nav>
+          <ul>
+            <li><a class="desk-link1" onclick="load()" href={{url_for("dashboard")}}>Home</a></li>
+            <li><a class="desk-link2" onclick="load()" href={{url_for("user")}}>Your stats</a></li>
+            <li><a class="desk-link3" onclick="load()" href={{url_for("leaderboard")}}>Leaderboards</a></li>
+            <li><a class="desk-link4" onclick="load()" href={{url_for("recommendations")}}>Recommendations</a></li>
+            <li><a class="desk-link5" onclick="load()" href={{url_for("about")}}>About Us</a></li>
+          </ul>
+        </nav>
+        <form class="pfp-wrap" action="#">
+          <button class="pfp-btn">
+            <img class="user-pfp" src={{ user[1] }}>
+          </button>
+        </form>
+        <form class="btn-form" action={{ url_for("logout") }}>
+          <button type="submit" id="logout-desk">Log out</button>
+        </form>
+        <!-- hamburger menu icon -->
+        <div id="menu-icon" class="menu-icon" onclick="toggleNav(), toggleIcon()">
+          <div class="bar b-1"></div>
+          <div class="bar b-2"></div>
+          <div class="bar b-3"></div>
+        </div>
+      </div>
+
+      <!-- dropdown nav -->
+      <nav id="main-nav">
+        <ul>
+          <li><a class="nav-link" onclick="load()" href={{url_for("dashboard")}}>Home</a></li>
+          <li><a class="nav-link" onclick="load()" href={{url_for("user")}}>Your stats</a></li>
+          <li><a class="nav-link" onclick="load()" href={{url_for("leaderboard")}}>Leaderboards</a></li>
+          <li><a class="nav-link" onclick="load()" href={{url_for("recommendations")}}>Recommendations</a></li>
+          <li><a class="nav-link" onclick="load()" href={{url_for("about")}}>About Us</a></li>
+        </ul>
+        <form class="btn-form" action={{ url_for("logout") }}>
+          <button type="submit" id="logout">Log out</button>
+        </form>
+      </nav>
+    </div>
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+    <footer>
+      <p>Copyright @2022 Swatify | <a id="flink1" href="http://open.spotify.com" target="_blank">Spotify</a> | <a id="flink2" href="#">Privacy</a></p>
+
+    </footer>
+  </body>
+</html>

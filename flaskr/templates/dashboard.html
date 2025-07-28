@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+{% block content %}
+<form id="search-form" method="POST">
+<input name="query" id="search-bar" class="search-bar" autocomplete="off" type="text" value="{{lastinput}}" placeholder="Type to search song">
+</form>
+<div id="main-search" class="search-wrap">
+  {% for item in searchls %}
+  <li class="search-item" onclick="resultShow()">
+    <img class="search-img" src={{ item[1] }}>
+    <div>
+    <p class="search-hide p-title-s">{{ item[0] }}</p>
+    <p class="search-hide p-artist-s">{{ item[4] }}</p>
+    </div>
+    <img class="search-hide link-hide" src={{ item[2] }}>
+    <img class="search-hide link-hide" src={{ item[5] }}>
+  </li>
+  {% endfor %}
+</div>
+<div id="result-item">
+  <h2>Search Result</h2>
+  <li class="result-item">
+    <img id="result-img" class="song-img" src="#">
+    <div class="result-info result-info-s">
+      <p id="result-title">Nameee</p>
+      <audio id="audio-src" controls="controls" src="#"></audio>
+
+ 
+
+      <div class="audio-player audio-player1 audio-player-s">
+        <p class="playback">#</p>
+
+        <div class="timeline">
+          <div class="progress"></div>
+        </div>
+
+        <div class="controls">
+          <div class="play-container">
+            <div id="toggle-play" class="toggle-play play"></div>
+          </div>
+          <div class="time">
+            <div class="current">0:00</div>
+            <div class="divider">/</div>
+            <div class="length"></div>
+          </div>
+          <div class="volume-container">
+            <div class="volume-button">
+              <div class="volume icono-volumeMedium"></div>
+            </div>
+            
+            <div class="volume-slider">
+              <div class="volume-percentage"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+    <div class="open-wrap">
+      <div class="open-spotify">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="open-submenu">
+        <div class="button">
+          <a id="resSpotify" class="open-a" href={{ devTrack['tracklink'] }} target="_blank">Play on Spotify</a>
+        </div>
+        <div class="button">
+          <a id="resDownload" class="open-a" href={{ devTrack['playback'] }} download>Download</a>
+        </div>
+      </div>
+    </div>
+  </li>
+</div>
+<h1 id="home-h1" class="page-h1">Swat's Music Landscape</h1>
+<div class="swat-wrap">
+  <div class="swat-stat">
+    <h2>Top Artists</h2>
+    <div class="artists-wrap">
+      {% for artist in topartists %}
+      <div class="artist-block">
+        <img class="artist-img" src={{ artist[1] }} alt="artist">
+        <p>{{ artist[0] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <a href={{ url_for("leaderboard") }}>Explore Leaderboards ></a>
+  </div>
+  <div class="swat-stat">
+    <h2>Top Songs</h2>
+    <div class="artists-wrap">
+      {% for track in toptracks %}
+      <div class="artist-block">
+        <img class="track-img" src={{ track[1] }} alt="artist">
+        <div>
+        <p id="p-title-home" class="p-title">{{ track[5] }}</p>
+        <p id="p-artist-home" class="p-artist">{{ track[6]}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <a href={{ url_for("leaderboard") }}>Explore Leaderboards ></a>
+  </div>
+  <div class="swat-stat">
+    <h2>Spotlight</h2>
+    <h3>Take a listen. You may like it.</h3>
+
+
+    <div>
+      <li class="result-item">
+        <img id="result-img" class="song-img" src={{ highlightTrack['image'] }}>
+        <div class="result-info">
+          <p class="p-title">{{ highlightTrack['title'] }}</p>
+          <p class="p-artist">{{ highlightTrack['artist'] }}</p>
+          <p id="spotlight-playback" class="playback-hidden">{{ highlightTrack['playback'] }}</p>
+    
+          <div class=" audio-player audio-player2">
+    
+            <div class="timeline">
+              <div class="progress"></div>
+            </div>
+    
+            <div class="controls">
+              <div class="play-container">
+                <div id="toggle-play" class="toggle-play play"></div>
+              </div>
+              <div class="time">
+                <div class="current">0:00</div>
+                <div class="divider">/</div>
+                <div class="length"></div>
+              </div>
+              <div class="volume-container">
+                <div class="volume-button">
+                  <div class="volume icono-volumeMedium"></div>
+                </div>
+                
+                <div class="volume-slider">
+                  <div class="volume-percentage"></div>
+                </div>
+              </div>
+            </div>
+    
+          </div>
+    
+    
+    
+        </div>
+        <div class="open-wrap">
+          <div class="open-spotify">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div class="open-submenu">
+            <div class="button">
+              <a class="open-a" href={{ highlightTrack['tracklink'] }} target="_blank">Play on Spotify</a>
+            </div>
+            <div class="button">
+              <a class="open-a" href={{ highlightTrack['playback'] }} download>Download</a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </div>
+
+
+
+
+
+
+
+  </div>
+  <div class="swat-stat">
+    <h2>Dev's choice</h2>
+    <h3>A randomly selected song, just for you.</h3>
+
+
+    <div>
+      <li class="result-item">
+        <img id="result-img" class="song-img" src={{ devTrack['image'] }}>
+        <div class="result-info">
+          <p class="p-title">{{ devTrack['title'] }}</p>
+          <p class="p-artist">{{ devTrack['artist'] }}</p>
+          <p id="devtrack-playback" class="playback-hidden">{{ devTrack['playback'] }}</p>
+    
+          <div class="audio-player audio-player3">
+    
+            <div class="timeline">
+              <div class="progress"></div>
+            </div>
+    
+            <div class="controls">
+              <div class="play-container">
+                <div id="toggle-play" class="toggle-play play"></div>
+              </div>
+              <div class="time">
+                <div class="current">0:00</div>
+                <div class="divider">/</div>
+                <div class="length"></div>
+              </div>
+              <div class="volume-container">
+                <div class="volume-button">
+                  <div class="volume icono-volumeMedium"></div>
+                </div>
+                
+                <div class="volume-slider">
+                  <div class="volume-percentage"></div>
+                </div>
+              </div>
+            </div>
+    
+          </div>
+    
+    
+    
+        </div>
+        <div class="open-wrap">
+          <div class="open-spotify">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div class="open-submenu">
+            <div class="button">
+              <a class="open-a" href={{ devTrack['tracklink'] }} target="_blank">Play on Spotify</a>
+            </div>
+            <div class="button">
+              <a class="open-a" href={{ devTrack['playback'] }} download>Download</a>
+            </div>
+          </div>
+        </div>
+      </li>
+    </div>
+
+
+  </div>
+</div>
+<!--<h3>Welcome, {{ user[0] }}</h3>
+      <a href={{ url_for("index") }}>Index</a>-->
+
+
+      
+
+      <!--<div id="chart" class="chart"></div>-->
+
+{% endblock content %}
